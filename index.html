@@ -12,30 +12,42 @@
 
   </canvas>
   <script>
-      let canvas=document.getElementById("canvas");
-      canvas.width=document.documentElement.clientWidth;
-      canvas.height=document.documentElement.clientHeight;
-      const ctx = canvas.getContext('2d');
-      ctx.fillStyle = 'green';
-      ctx.strokeStyle='none';
+      let canvas=document.getElementById("canvas")
+      canvas.width=document.documentElement.clientWidth
+      canvas.height=document.documentElement.clientHeight
+      const ctx = canvas.getContext('2d')
+      ctx.fillStyle = 'green'
+      ctx.strokeStyle='none'     
       let painting=false;
-      canvas.onmousedown=()=>{
-        painting=true
-      }
 
-      canvas.onmousemove=(e)=>{  
-            if(painting==true) {
+      let isTouchDevice='ontouchstart' in document.documentElement;
+      if(isTouchDevice){
+        canvas.ontouchmove=(e)=>{
             
-                
-                ctx.fillRect(e.clientX-5, e.clientY-5, 10, 10);
+            ctx.beginPath();
+            ctx.arc(e.touches[0].clientX, e.touches[0].clientY, 6, 0, 2 * Math.PI);                               
+            ctx.fill();
+            ctx.strokeStyle()
+            
+        }
+      }else{
+        canvas.onmousedown=()=>{
+        painting=true
+        }
+      canvas.onmousemove=(e)=>{  
+            if(painting==true) {                              
                 ctx.beginPath();
-                ctx.arc(e.clientX, e.clientY, 6, 0, 2 * Math.PI);
-               
+                ctx.arc(e.clientX, e.clientY, 6, 0, 2 * Math.PI);                               
+                ctx.fill();
+                ctx.strokeStyle()
             }  
         canvas.onmouseup=()=>{
             painting=false
         }
-      }
+      
+        }
+      
+    }
   </script>
 </body>
 </html>
